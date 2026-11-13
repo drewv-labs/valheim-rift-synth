@@ -1,5 +1,3 @@
-<div align="center">
-
 ```text
 ╦  ╦╔═╗╦  ╦ ╦╔═╗╦╔╦╗   ╦═╗╦╔═╗╔╦╗   ╔═╗╦ ╦╔╗╔╔╦╗╦ ╦
 ╚╗╔╝╠═╣║  ╠═╣║╣ ║║║║───╠╦╝║╠╣  ║ ───╚═╗╚╦╝║║║ ║ ╠═╣
@@ -16,8 +14,6 @@
 Type a natural-language dungeon prompt on your laptop. Within seconds, an LLM architects a **Mythic+ Keystone Rift**, passes a deterministic **Potato-PC & Z-span linter**, SCPs a hot-reloaded manifest to your dedicated Linux server, and materializes an indestructible Black Marble arena **4,500 meters in the sky**—complete with wave gates, seasonal Kiss/Curse affixes, a Keystone par clock, and timed bonus chests.
 
 **Your friends join on 100% unmodded, vanilla Steam Valheim clients.**
-
-</div>
 
 ---
 
