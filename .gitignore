@@ -1,0 +1,25 @@
+# Synced game & BepInEx assemblies
+.lib/
+
+# .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+
+# Python / uv artifacts
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+dist/
+*.egg-info/
+
+# Local generated manifests / temp files
+active_rift.json
+.env
+
+# macOS
+.DS_Store
+skills/

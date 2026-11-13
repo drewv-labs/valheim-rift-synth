@@ -1,0 +1,250 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jimmylab.local/schemas/rift_manifest.schema.json",
+  "title": "RiftManifest",
+  "description": "Server-authoritative Valheim Mythic+ Skybox Rift Manifest (v0.1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "rift_id",
+    "title",
+    "keystone_level",
+    "par_time_seconds",
+    "global_affixes",
+    "rooms",
+    "rewards"
+  ],
+  "properties": {
+    "rift_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "minLength": 3,
+      "maxLength": 64,
+      "description": "Kebab-case slug uniquely identifying this Rift manifest."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 80,
+      "description": "Display title shown via MessageHud.MessageType.Center upon Rift entry."
+    },
+    "keystone_level": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 15,
+      "description": "Mythic+ Keystone tier (1-15). Scales mob HP (1 + 0.18*L) and damage (1 + 0.10*L)."
+    },
+    "par_time_seconds": {
+      "type": "integer",
+      "minimum": 180,
+      "maximum": 900,
+      "description": "Target Keystone completion timer in seconds."
+    },
+    "global_affixes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/GlobalAffix"
+      },
+      "description": "Active server-authoritative Mythic+ affixes (must include at least 1 positive blessing)."
+    },
+    "rooms": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 4,
+      "items": {
+        "$ref": "#/$defs/RoomSpec"
+      },
+      "description": "Ordered North-to-South (+Z) topological room graph inside a single 60m x 60m x 40m skybox zone."
+    },
+    "rewards": {
+      "$ref": "#/$defs/RewardSpec"
+    }
+  },
+  "$defs": {
+    "GlobalAffix": {
+      "type": "string",
+      "enum": [
+        "molten_slag",
+        "bolstering",
+        "thunder_blessing",
+        "shielded_pack"
+      ]
+    },
+    "RoomTemplate": {
+      "type": "string",
+      "enum": [
+        "entry_vestibule",
+        "crucible_square",
+        "gauntlet_bridge",
+        "sanctum_oct"
+      ]
+    },
+    "PillarLayout": {
+      "type": "string",
+      "enum": [
+        "none",
+        "four_corners",
+        "center_los_blocker"
+      ]
+    },
+    "AnchorId": {
+      "type": "string",
+      "enum": [
+        "center",
+        "north_left",
+        "north_right",
+        "south_left",
+        "south_right",
+        "sniper_perch_ne",
+        "sniper_perch_nw"
+      ]
+    },
+    "SpawnSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prefab",
+        "anchor",
+        "count",
+        "stars",
+        "is_boss"
+      ],
+      "properties": {
+        "prefab": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 64,
+          "description": "Curated vanilla Valheim creature prefab ID."
+        },
+        "anchor": {
+          "$ref": "#/$defs/AnchorId"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        },
+        "stars": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Creature star level (0-2), applied via Character.SetLevel(stars + 1)."
+        },
+        "is_boss": {
+          "type": "boolean",
+          "description": "Marks a room/final Rift boss encounter target."
+        }
+      }
+    },
+    "WaveSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "wave_index",
+        "spawns"
+      ],
+      "properties": {
+        "wave_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "spawns": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/$defs/SpawnSpec"
+          }
+        }
+      }
+    },
+    "RoomSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "room_index",
+        "template",
+        "pillar_layout",
+        "waves"
+      ],
+      "properties": {
+        "room_index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "template": {
+          "$ref": "#/$defs/RoomTemplate"
+        },
+        "pillar_layout": {
+          "$ref": "#/$defs/PillarLayout"
+        },
+        "waves": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/WaveSpec"
+          }
+        }
+      }
+    },
+    "LootDropSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prefab",
+        "amount",
+        "quality"
+      ],
+      "properties": {
+        "prefab": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 64,
+          "description": "Curated vanilla Valheim item prefab ID."
+        },
+        "amount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 999
+        },
+        "quality": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        }
+      }
+    },
+    "RewardSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base_drops",
+        "timed_bonus_drops"
+      ],
+      "properties": {
+        "base_drops": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/LootDropSpec"
+          }
+        },
+        "timed_bonus_drops": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/LootDropSpec"
+          }
+        }
+      }
+    }
+  }
+}
