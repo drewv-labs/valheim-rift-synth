@@ -3,13 +3,13 @@ EXTRA_PATH := /opt/homebrew/bin:/usr/local/share/dotnet:$(HOME)/.dotnet:$(HOME)/
 export PATH := $(EXTRA_PATH):$(PATH)
 
 BABBOX_HOST ?= babbagebox-rtx-lan
-BABBOX_REF_STACK ?= /opt/stacks/rift-sandbox
-BABBOX_SANDBOX_STACK ?= /opt/stacks/rift-sandbox
-BABBOX_SANDBOX_CONTAINER ?= rift-sandbox-server
+BABBOX_REF_STACK ?= /opt/stacks/riftheim
+BABBOX_SANDBOX_STACK ?= /opt/stacks/riftheim
+BABBOX_SANDBOX_CONTAINER ?= riftheim
 SANDBOX_PORT ?= 2458
 SANDBOX_QUERY_PORT ?= 2459
-SANDBOX_WORLD ?= RiftSandbox
-SANDBOX_NAME ?= RiftSandbox
+SANDBOX_WORLD ?= SoS_Riftheim
+SANDBOX_NAME ?= SoSRiftheimServer
 SANDBOX_PASS ?= acidboots
 
 REMOTE_MANAGED := $(BABBOX_REF_STACK)/data/bepinex/valheim_server_Data/Managed
@@ -27,16 +27,16 @@ help:
 	@echo "valheim-rift-synth targets:"
 	@echo "  make sync-libs       Rsync Valheim & BepInEx assemblies from BabBox into .lib/"
 	@echo "  make build-mod       Compile ValheimRiftEngine.dll (Release, 0 warnings)"
-	@echo "  make ensure-sandbox  Provision RiftSandbox dedicated server on BabBox (ports 2458-2459)"
-	@echo "  make deploy-mod      Push ValheimRiftEngine.dll to BabBox RiftSandbox & restart service"
-	@echo "  make rollback-mod    Roll back RiftSandbox to ValheimRiftEngine.dll.prev via riftctl"
+	@echo "  make ensure-sandbox  Provision SoSRiftheimServer on BabBox (ports 2458-2459)"
+	@echo "  make deploy-mod      Push ValheimRiftEngine.dll to BabBox riftheim & restart service"
+	@echo "  make rollback-mod    Roll back riftheim to ValheimRiftEngine.dll.prev via riftctl"
 	@echo "  make synth-rift      Synthesize & deploy a Rift Manifest via tools/rift_synth (PROMPT=...)"
-	@echo "  make logs            Tail BepInEx LogOutput.log on BabBox RiftSandbox"
+	@echo "  make logs            Tail BepInEx LogOutput.log on BabBox riftheim"
 	@echo ""
 	@echo "Tailscale Collaborator Usage (game-dev):"
-	@echo "  make sync-libs BABBOX_HOST=game-dev@100.81.125.6"
-	@echo "  make deploy-mod BABBOX_HOST=game-dev@100.81.125.6"
-	@echo "  make synth-rift BABBOX_HOST=game-dev@100.81.125.6 PROMPT=\"...\""
+	@echo "  make sync-libs BABBOX_HOST=babbox-rift"
+	@echo "  make deploy-mod BABBOX_HOST=babbox-rift"
+	@echo "  make synth-rift BABBOX_HOST=babbox-rift PROMPT=\"...\""
 
 sync-libs:
 	@mkdir -p .lib

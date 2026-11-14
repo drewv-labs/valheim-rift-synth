@@ -33,7 +33,7 @@ from validator import (  # noqa: E402
 
 DEFAULT_BABBOX_HOST = "babbagebox-rtx-lan"
 DEFAULT_BABBOX_REMOTE_PATH = (
-    "/opt/stacks/rift-sandbox/config/bepinex/ValheimRiftEngine/active_rift.json"
+    "/opt/stacks/riftheim/config/bepinex/ValheimRiftEngine/active_rift.json"
 )
 DEFAULT_GEMINI_MODEL = "gemini-2.5-pro"
 DEFAULT_LOCAL_OLLAMA_BASE_URL = "http://localhost:11434/v1"
